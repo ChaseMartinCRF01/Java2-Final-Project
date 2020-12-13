@@ -1,10 +1,7 @@
 package edu.kcc.ui;
 
-
-
 import java.util.Arrays;
 import java.util.Scanner;
-
 
 public class UIUtility {
 
@@ -13,25 +10,24 @@ public class UIUtility {
      */
     public static final int PAGE_WIDTH = 80;
 
-
     /**
      * Displays the supplied title text in a consistently formatted manner.
      *
      * @param title The text to display
      */
-    public static void showSectionTitle(String title){
+    public static void showSectionTitle(String title) {
         System.out.print(getPageBars('*'));
         int barsWidth = 4;
         int offset = (PAGE_WIDTH / 2) - (title.length() / 2) - barsWidth;
         char[] spaces = new char[offset];
         Arrays.fill(spaces, ' ');
-        System.out.println( "\n" + new String(spaces) + "*** " + title + " ***\n");
+        System.out.println("\n" + new String(spaces) + "*** " + title + " ***\n");
     }
 
     /**
      * Displays a wait prompt and waits for the user to hit the enter key.
      */
-    public static void pressEnterToContinue(){
+    public static void pressEnterToContinue() {
         System.out.print("\nPress Enter to continue... ");
         Scanner in = new Scanner(System.in);
         in.nextLine();
@@ -42,12 +38,12 @@ public class UIUtility {
      *
      * @param menuTitle the text of the title
      */
-    public static void showMenuTitle(String menuTitle){
+    public static void showMenuTitle(String menuTitle) {
         int barsWidth = 4;
         int offset = (PAGE_WIDTH / 2) - (menuTitle.length() / 2) - barsWidth;
         char[] spaces = new char[offset];
         Arrays.fill(spaces, ' ');
-        System.out.println( "\n"
+        System.out.println("\n"
                 + new String(spaces)
                 + "xxx "
                 + menuTitle
@@ -63,8 +59,8 @@ public class UIUtility {
      * @param menuOptions the list of menu options to display
      * @return the user's response
      */
-    public static String showMenuOptions(String menuTitle
-            , String prompt, String[] menuOptions) {
+    public static String showMenuOptions(String menuTitle,
+             String prompt, String[] menuOptions) {
         showMenuTitle(menuTitle);
         for (String menuOption : menuOptions) {
             System.out.println("\t" + menuOption);
@@ -76,33 +72,35 @@ public class UIUtility {
 
     /**
      * Provides a consistent manner for showing messages.
+     *
      * @param message
      */
-    public static void showMessage(String message){
+    public static void showMessage(String message) {
         System.out.println(message);
     }
 
     /**
-     * Displays the supplied message.  If waitForAcknowledement is true, will
+     * Displays the supplied message. If waitForAcknowledement is true, will
      * also call pressEnterToContinue().
      *
      * @param message The error message
      * @param waitForAcknowledgement true if must press enter to acknowledge
      */
-    public static void showErrorMessage(String message
-            , boolean waitForAcknowledgement){
+    public static void showErrorMessage(String message,
+             boolean waitForAcknowledgement) {
         System.out.println("ERROR: " + message);
-        if(waitForAcknowledgement){
+        if (waitForAcknowledgement) {
             pressEnterToContinue();
         }
     }
 
     /**
      * Build a line of stars the width of the page.
+     *
      * @param barCharacter the character from which to make the bar
      * @return
      */
-    public static String getPageBars(char barCharacter){
+    public static String getPageBars(char barCharacter) {
         char[] chars = new char[PAGE_WIDTH];
         Arrays.fill(chars, barCharacter);
         return new String(chars) + "\n";
@@ -110,30 +108,30 @@ public class UIUtility {
 
     /**
      * Takes a String and shows it, performing line breaks at PAGE_WIDTH
-     * intervals.  This makes it easier to print really long Strings in a
+     * intervals. This makes it easier to print really long Strings in a
      * friendly manner.
      *
      * @param longText the text to print.
      */
-    public static void showLongText(String longText){
+    public static void showLongText(String longText) {
         System.out.print(getPageBars('-'));
         String toPrint;
         String tempLine = null;
         String remainder = longText;
         int lastSpaceLocation;
-        while(remainder.length() > 0){
-            if(remainder.length() >= PAGE_WIDTH){
+        while (remainder.length() > 0) {
+            if (remainder.length() >= PAGE_WIDTH) {
                 tempLine = remainder.substring(0, PAGE_WIDTH);
             } else {
                 tempLine = remainder.substring(0);
             }
-            if(tempLine.length() < 80){
+            if (tempLine.length() < 80) {
                 toPrint = tempLine;
             } else {
                 lastSpaceLocation = tempLine.lastIndexOf(' ');
                 toPrint = tempLine.substring(0, lastSpaceLocation);
             }
-            if(remainder.length() > toPrint.length()){
+            if (remainder.length() > toPrint.length()) {
                 remainder = remainder.substring(toPrint.length() + 1);
             } else {
                 remainder = remainder.substring(toPrint.length());
@@ -149,33 +147,33 @@ public class UIUtility {
      * @param prompt the prompt text for the user
      * @return the String entered by the user
      */
-    public static String getUserString(String prompt){
+    public static String getUserString(String prompt) {
         Scanner in = new Scanner(System.in);
         System.out.print(prompt + " ");
         return in.nextLine().trim();
     }
 
     /**
-     * Prompts the user to enter a whole number.  If the value is not a whole
-     * number, prints the notIntMessage and tries again.  Otherwise, returns the
+     * Prompts the user to enter a whole number. If the value is not a whole
+     * number, prints the notIntMessage and tries again. Otherwise, returns the
      * int that was entered.
      *
      * @param prompt the prompt text for the user
      * @param notIntMessage the error message for not an int
      * @return the int entered
      */
-    public static int getUserInt(String prompt, String notIntMessage){
+    public static int getUserInt(String prompt, String notIntMessage) {
         Scanner in = new Scanner(System.in);
         int value = 0;
         String input;
         boolean needed = true;
-        while(needed){
+        while (needed) {
             System.out.print(prompt + " ");
             input = in.nextLine();
-            try{
+            try {
                 value = Integer.parseInt(input);
                 needed = false;
-            }catch(NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 showErrorMessage(notIntMessage, true);
             }
         }
@@ -193,13 +191,13 @@ public class UIUtility {
      * @param outOfBoundsMessage the error message for not in range
      * @return the entered whole number
      */
-    public static int getUserIntInRange(String prompt, String notIntMessage
-            , int lowBound, int highBound, String outOfBoundsMessage ){
+    public static int getUserIntInRange(String prompt, String notIntMessage,
+             int lowBound, int highBound, String outOfBoundsMessage) {
         int value = 0;
         boolean needed = true;
-        while(needed){
+        while (needed) {
             value = getUserInt(prompt, notIntMessage);
-            if(value < lowBound || value > highBound){
+            if (value < lowBound || value > highBound) {
                 showErrorMessage(outOfBoundsMessage, true);
             } else {
                 needed = false;
@@ -207,6 +205,5 @@ public class UIUtility {
         }
         return value;
     }
-
 
 }
