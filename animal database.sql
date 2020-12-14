@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS Animal;
 CREATE TABLE Animal(
     Animal_ID VARCHAR(25) NOT NULL,
     Animal_Name VARCHAR(100) NOT NULL,
+    Animal_Species VARCHAR(100) NOT NULL,
     Animal_Gender VARCHAR(6) NOT NULL,
 	Animal_Age INT NOT NULL,
 	Animal_Fixed BOOLEAN NOT NULL,
@@ -26,6 +27,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_add_animal_record$$
 CREATE PROCEDURE sp_add_animal_record(
     IN P_Animal_ID VARCHAR(25),
+    IN p_Animal_Species VARCHAR(100),
     IN p_Animal_Name VARCHAR(100),
     IN p_Animal_Gender VARCHAR(6),
 	IN p_Animal_Age INT,
@@ -39,6 +41,7 @@ BEGIN
     INSERT INTO Animal(
     Animal_ID,
     Animal_Name,
+    Animal_Species,
     Animal_Gender,
 	Animal_Age,
 	Animal_Fixed,
@@ -50,6 +53,7 @@ BEGIN
     VALUES (
     p_Animal_ID,
     p_Animal_Name,
+    p_Animal_Species,
     p_Animal_Gender,
 	p_Animal_Age,
 	p_Animal_Fixed,
